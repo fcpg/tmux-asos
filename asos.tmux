@@ -24,5 +24,5 @@ tmux bind ${nopfx:+-n} "$key" \
     load-buffer  -b asos_out "${ASOS_TMPDIR:-/tmp}/asos.out"                            \\\; \
     send-keys    'C-w'                                                                  \\\; \
     paste-buffer -b asos_out -s ""                                                      \\\; \
-    run-shell    "[[ ! -v ASOS_DEBUG ]] && rm ${ASOS_TMPDIR:-/tmp}/{asos.{in,out,allpanes},compword.out} || true"
+    run-shell    "rm ${ASOS_TMPDIR:-/tmp}/{asos.{in,out,allpanes},compword.out}"
 
