@@ -2,7 +2,7 @@
 
 CURRENT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-readonly compword="${1:-$(awk -v RS='' 'END {print $NF;}' ${ASOS_TMPDIR:-/tmp}/asos.in)}"
+readonly compword="${1:-$(cat ${ASOS_TMPDIR:-/tmp}/asos.in)}"
 
 echo "${compword}" > "${ASOS_TMPDIR:-/tmp}/compword.out"
 
