@@ -16,13 +16,17 @@ get_tmux_option() {
 readonly key="$(get_tmux_option "@asos-key" "C-a")"
 readonly nopfx="$(get_tmux_option "@asos-key-noprefix" '')"
 
-
 tmux bind ${nopfx:+-n} "$key" \
-    capture-pane -b asos_in                                                             \\\; \
-    save-buffer  -b asos_in "${ASOS_TMPDIR:-/tmp}/asos.in"                              \\\; \
-    run-shell    "${CURRENT_DIR}/scripts/comp_asos.sh > ${ASOS_TMPDIR:-/tmp}/asos.out"  \\\; \
-    load-buffer  -b asos_out "${ASOS_TMPDIR:-/tmp}/asos.out"                            \\\; \
-    send-keys    'C-w'                                                                  \\\; \
-    paste-buffer -b asos_out -s ""                                                      \\\; \
+    copy-mode                                                                          \\\; \
+    send-keys -X cursor-left                                                           \\\; \
+    send-keys -X begin-selection                                                       \\\; \
+    send-keys -X previous-word                                                         \\\; \
+    send-keys -X copy-selection                                                        \\\; \
+    send-keys -X cancel                                                                \\\; \
+    save-buffer  "${ASOS_TMPDIR:-/tmp}/asos.in"                                        \\\; \
+    run-shell    "${CURRENT_DIR}/scripts/comp_asos.sh > ${ASOS_TMPDIR:-/tmp}/asos.out" \\\; \
+    load-buffer  -b asos_out "${ASOS_TMPDIR:-/tmp}/asos.out"                           \\\; \
+    send-keys    'C-w'                                                                 \\\; \
+    paste-buffer -b asos_out -s ""                                                     \\\; \
     run-shell    "rm ${ASOS_TMPDIR:-/tmp}/{asos.{in,out,allpanes},compword.out}"
 
